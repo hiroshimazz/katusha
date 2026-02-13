@@ -1,252 +1,106 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Для тебя ❤️</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Для тебя ❤️</title>
 
-  <style>
-    :root{
-      --bg1:#fff0f6;
-      --bg2:#ffe4ea;
-      --card:#ffffffcc;
-      --text:#1a1a1a;
-      --accent:#ff2d55;
-      --accent2:#ff7aa2;
-      --shadow: 0 20px 60px rgba(0,0,0,.15);
-    }
+<style>
+:root{
+  --accent:#ff2d55;
+  --accent2:#ff7aa2;
+  --shadow: 0 20px 60px rgba(0,0,0,.15);
+}
+*{box-sizing:border-box}
 
-    *{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #fff0f6, #ffe4ea);
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
 
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 800px at 20% 10%, var(--bg1), transparent 60%),
-        radial-gradient(1200px 800px at 80% 90%, var(--bg2), transparent 55%),
-        linear-gradient(135deg, #fff, #ffeef4);
-      display:grid;
-      place-items:center;
-      padding:20px;
-      overflow:hidden;
-    }
+.container{
+  width:min(900px, 100%);
+}
 
-    /* Плавающие сердечки */
-    .hearts{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-    }
+.video-wrapper{
+  position:relative;
+  padding-bottom:56.25%; /* 16:9 */
+  height:0;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  margin-bottom:25px;
+}
 
-    .heart{
-      position:absolute;
-      width:16px;
-      height:16px;
-      background:var(--accent);
-      transform:rotate(45deg);
-      opacity:.18;
-      animation:floatUp linear infinite;
-    }
+.video-wrapper iframe{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:20px;
+}
 
-    .heart:before,
-    .heart:after{
-      content:"";
-      position:absolute;
-      width:16px;
-      height:16px;
-      background:var(--accent);
-      border-radius:50%;
-    }
+.card{
+  background:white;
+  border-radius:25px;
+  padding:30px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
 
-    .heart:before{ left:-8px; top:0 }
-    .heart:after{ left:0; top:-8px }
+h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
 
-    @keyframes floatUp{
-      from{ transform:translateY(110vh) rotate(45deg); }
-      to{ transform:translateY(-20vh) rotate(45deg); }
-    }
+p{
+  opacity:.85;
+  margin-bottom:20px;
+}
 
-    .card{
-      width:min(720px, 100%);
-      background:var(--card);
-      backdrop-filter:blur(10px);
-      border-radius:28px;
-      padding:32px 24px;
-      text-align:center;
-      box-shadow:var(--shadow);
-    }
-
-    .big-heart{
-      width:90px;
-      height:90px;
-      margin:0 auto 20px;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      transform:rotate(45deg);
-      border-radius:18px;
-      position:relative;
-      animation:pulse 1.6s ease-in-out infinite;
-    }
-
-    .big-heart:before,
-    .big-heart:after{
-      content:"";
-      position:absolute;
-      width:90px;
-      height:90px;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      border-radius:50%;
-    }
-
-    .big-heart:before{ left:-45px; top:0 }
-    .big-heart:after{ left:0; top:-45px }
-
-    @keyframes pulse{
-      0%,100%{ transform:rotate(45deg) scale(1) }
-      50%{ transform:rotate(45deg) scale(1.08) }
-    }
-
-    h1{
-      font-size:clamp(28px,3vw,40px);
-      margin:0 0 12px;
-    }
-
-    p{
-      font-size:clamp(16px,2vw,18px);
-      opacity:.85;
-      margin:0 0 20px;
-    }
-
-    .question{
-      font-size:clamp(18px,2.5vw,22px);
-      font-weight:600;
-      margin-bottom:20px;
-    }
-
-    .btns{
-      display:flex;
-      justify-content:center;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    button{
-      border:none;
-      padding:14px 22px;
-      border-radius:14px;
-      font-size:16px;
-      cursor:pointer;
-      transition:.2s;
-    }
-
-    button:active{
-      transform:scale(.97);
-    }
-
-    .yes{
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      color:white;
-      font-weight:700;
-      box-shadow:0 15px 30px rgba(255,45,85,.25);
-    }
-
-    .no{
-      background:rgba(0,0,0,.07);
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.4);
-      display:none;
-      place-items:center;
-      padding:20px;
-    }
-
-    .modal.on{
-      display:grid;
-    }
-
-    .modal-card{
-      background:white;
-      border-radius:24px;
-      padding:28px;
-      width:min(600px,100%);
-      text-align:center;
-      box-shadow:var(--shadow);
-    }
-
-    .modal-card h2{
-      margin-top:10px;
-      font-size:clamp(22px,3vw,30px);
-    }
-
-    .close{
-      margin-top:16px;
-      background:rgba(0,0,0,.08);
-    }
-  </style>
+.btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  padding:14px 22px;
+  border-radius:14px;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
-<div class="hearts" id="hearts"></div>
+<div class="container">
 
-<div class="card">
-  <div class="big-heart"></div>
-
-  <h1>Для самой любимой ❤️</h1>
-
-  <p>
-    С тобой мир становится ярче, теплее и добрее.  
-    Спасибо, что ты есть в моей жизни.
-  </p>
-
-  <div class="question">
-    Будешь моей Валентинкой? 💌
+  <!-- YouTube видео -->
+  <div class="video-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/yrwPySr-zog?si=mZeuQRdo8uxIVPgZ"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
   </div>
 
-  <div class="btns">
-    <button class="yes" id="yesBtn">Да 😍</button>
-    <button class="no">Нет 😅</button>
-  </div>
-</div>
-
-<div class="modal" id="modal">
-  <div class="modal-card">
-    <div style="font-size:50px;">🎉</div>
-    <h2>Урааа! ❤️</h2>
+  <!-- Текст валентинки -->
+  <div class="card">
+    <h1>Катюша ❤️</h1>
     <p>
-      Тогда официально: ты моя Валентинка 💖  
-      Обещаю много обнимашек, заботы и поцелуев 😘
+      Это видео — потому что ты для меня особенная.  
+      И я хочу, чтобы ты это почувствовала.
     </p>
-    <button class="close" id="closeBtn">Закрыть</button>
+
+    <button class="btn">Я люблю тебя 💖</button>
   </div>
+
 </div>
-
-<script>
-  // Сердечки
-  const hearts = document.getElementById("hearts");
-  for(let i=0;i<25;i++){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(6+Math.random()*6)+"s";
-    h.style.opacity=0.1+Math.random()*0.2;
-    hearts.appendChild(h);
-  }
-
-  // Модалка
-  const yesBtn=document.getElementById("yesBtn");
-  const modal=document.getElementById("modal");
-  const closeBtn=document.getElementById("closeBtn");
-
-  yesBtn.onclick=()=>modal.classList.add("on");
-  closeBtn.onclick=()=>modal.classList.remove("on");
-  modal.onclick=(e)=>{ if(e.target===modal) modal.classList.remove("on"); }
-</script>
 
 </body>
 </html>
