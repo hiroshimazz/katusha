@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Валентинка ❤️</title>
+  <title>Для тебя ❤️</title>
+
   <style>
     :root{
       --bg1:#fff0f6;
@@ -12,309 +13,160 @@
       --text:#1a1a1a;
       --accent:#ff2d55;
       --accent2:#ff7aa2;
-      --shadow: 0 18px 50px rgba(0,0,0,.15);
+      --shadow: 0 20px 60px rgba(0,0,0,.15);
     }
+
     *{box-sizing:border-box}
+
     body{
       margin:0;
       min-height:100vh;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
-      background: radial-gradient(1200px 800px at 20% 10%, var(--bg1), transparent 60%),
-                  radial-gradient(1200px 800px at 80% 90%, var(--bg2), transparent 55%),
-                  linear-gradient(135deg, #fff, #ffeef4);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, var(--bg1), transparent 60%),
+        radial-gradient(1200px 800px at 80% 90%, var(--bg2), transparent 55%),
+        linear-gradient(135deg, #fff, #ffeef4);
+      display:grid;
+      place-items:center;
+      padding:20px;
       overflow:hidden;
     }
 
-    /* floating hearts */
-    .hearts{position:fixed; inset:0; pointer-events:none; overflow:hidden}
-    .heart{
-      position:absolute;
-      width:16px; height:16px;
-      background: var(--accent);
-      transform: rotate(45deg);
-      opacity:.18;
-      animation: floatUp linear infinite;
-      filter: blur(.2px);
-    }
-    .heart:before,.heart:after{
-      content:"";
-      position:absolute;
-      width:16px; height:16px;
-      background: var(--accent);
-      border-radius:50%;
-    }
-    .heart:before{left:-8px; top:0}
-    .heart:after{left:0; top:-8px}
-    @keyframes floatUp{
-      from{ transform: translateY(110vh) rotate(45deg); }
-      to{ transform: translateY(-20vh) rotate(45deg); }
+    /* Плавающие сердечки */
+    .hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
     }
 
-    .wrap{
-      position:relative;
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:24px;
+    .heart{
+      position:absolute;
+      width:16px;
+      height:16px;
+      background:var(--accent);
+      transform:rotate(45deg);
+      opacity:.18;
+      animation:floatUp linear infinite;
     }
+
+    .heart:before,
+    .heart:after{
+      content:"";
+      position:absolute;
+      width:16px;
+      height:16px;
+      background:var(--accent);
+      border-radius:50%;
+    }
+
+    .heart:before{ left:-8px; top:0 }
+    .heart:after{ left:0; top:-8px }
+
+    @keyframes floatUp{
+      from{ transform:translateY(110vh) rotate(45deg); }
+      to{ transform:translateY(-20vh) rotate(45deg); }
+    }
+
     .card{
-      width:min(760px, 100%);
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border:1px solid rgba(255,255,255,.7);
-      border-radius:26px;
-      box-shadow: var(--shadow);
-      padding:28px 24px;
+      width:min(720px, 100%);
+      background:var(--card);
+      backdrop-filter:blur(10px);
+      border-radius:28px;
+      padding:32px 24px;
       text-align:center;
-    }
-    .badge{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 14px;
-      border-radius:999px;
-      background: rgba(255,45,85,.12);
-      border:1px solid rgba(255,45,85,.25);
-      color: #b3002d;
-      font-weight:600;
-      margin-bottom:12px;
-    }
-    .title{
-      font-size: clamp(28px, 3.5vw, 44px);
-      line-height:1.1;
-      margin:10px 0 6px;
-    }
-    .subtitle{
-      margin:0 auto 18px;
-      max-width: 58ch;
-      font-size: clamp(16px, 2.2vw, 19px);
-      opacity:.85;
+      box-shadow:var(--shadow);
     }
 
     .big-heart{
-      width:90px; height:90px;
-      margin:16px auto 6px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      transform: rotate(45deg);
-      border-radius: 16px;
+      width:90px;
+      height:90px;
+      margin:0 auto 20px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      transform:rotate(45deg);
+      border-radius:18px;
       position:relative;
-      box-shadow: 0 16px 30px rgba(255,45,85,.25);
-      animation: pulse 1.7s ease-in-out infinite;
+      animation:pulse 1.6s ease-in-out infinite;
     }
-    .big-heart:before,.big-heart:after{
+
+    .big-heart:before,
+    .big-heart:after{
       content:"";
       position:absolute;
-      width:90px; height:90px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      width:90px;
+      height:90px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
       border-radius:50%;
     }
-    .big-heart:before{left:-45px; top:0}
-    .big-heart:after{left:0; top:-45px}
+
+    .big-heart:before{ left:-45px; top:0 }
+    .big-heart:after{ left:0; top:-45px }
+
     @keyframes pulse{
-      0%,100%{transform: rotate(45deg) scale(1)}
-      50%{transform: rotate(45deg) scale(1.06)}
+      0%,100%{ transform:rotate(45deg) scale(1) }
+      50%{ transform:rotate(45deg) scale(1.08) }
+    }
+
+    h1{
+      font-size:clamp(28px,3vw,40px);
+      margin:0 0 12px;
+    }
+
+    p{
+      font-size:clamp(16px,2vw,18px);
+      opacity:.85;
+      margin:0 0 20px;
     }
 
     .question{
-      font-size: clamp(18px, 2.6vw, 22px);
-      margin: 14px 0 18px;
-      font-weight: 650;
+      font-size:clamp(18px,2.5vw,22px);
+      font-weight:600;
+      margin-bottom:20px;
     }
 
     .btns{
       display:flex;
-      gap:12px;
       justify-content:center;
+      gap:14px;
       flex-wrap:wrap;
-      margin: 10px 0 6px;
-    }
-    button{
-      border:0;
-      padding: 14px 18px;
-      border-radius: 14px;
-      font-size: 16px;
-      cursor:pointer;
-      transition: transform .12s ease, filter .12s ease, opacity .12s ease;
-      user-select:none;
-    }
-    button:active{transform: scale(.98)}
-    .yes{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:white;
-      font-weight:700;
-      box-shadow: 0 14px 26px rgba(255,45,85,.25);
-      min-width: 160px;
-    }
-    .no{
-      background: rgba(0,0,0,.06);
-      color:#222;
-      border:1px solid rgba(0,0,0,.08);
-      min-width: 160px;
     }
 
-    .footer{
-      margin-top:16px;
-      font-size:14px;
-      opacity:.65;
+    button{
+      border:none;
+      padding:14px 22px;
+      border-radius:14px;
+      font-size:16px;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    button:active{
+      transform:scale(.97);
+    }
+
+    .yes{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;
+      font-weight:700;
+      box-shadow:0 15px 30px rgba(255,45,85,.25);
+    }
+
+    .no{
+      background:rgba(0,0,0,.07);
     }
 
     .modal{
       position:fixed;
       inset:0;
+      background:rgba(0,0,0,.4);
       display:none;
       place-items:center;
-      background: rgba(0,0,0,.35);
-      padding:24px;
-    }
-    .modal.on{display:grid}
-    .modal-card{
-      width:min(640px, 100%);
-      background:white;
-      border-radius:24px;
-      padding:22px 18px;
-      box-shadow: var(--shadow);
-      text-align:center;
-    }
-    .modal-title{
-      font-size: clamp(22px, 3vw, 30px);
-      margin: 6px 0 8px;
-    }
-    .modal-text{
-      margin:0 0 14px;
-      opacity:.85;
-      line-height:1.45;
-    }
-    .close{
-      background: rgba(0,0,0,.08);
-      padding: 12px 16px;
-      border-radius: 14px;
+      padding:20px;
     }
 
-    .tiny{
-      font-size: 12px;
-      opacity:.6;
-      margin-top:10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="hearts" id="hearts"></div>
-
-  <div class="wrap">
-    <div class="card">
-      <div class="badge">💌 Валентинка</div>
-
-      <div class="big-heart" aria-hidden="true"></div>
-
-      <h1 class="title">Для самой красивой девочки ❤️</h1>
-      <p class="subtitle">
-        Я хочу сказать одну простую вещь: с тобой даже обычный день становится праздником.
-        Спасибо, что ты есть.
-      </p>
-
-      <div class="question" id="question">Будешь моей Валентинкой? 🥺</div>
-
-      <div class="btns">
-        <button class="yes" id="yesBtn">Дааа 😍</button>
-        <button class="no" id="noBtn">Нет 😶</button>
-      </div>
-
-      <div class="footer">
-        P.S. Если нажмёшь «Нет», кнопка может начать жить своей жизнью 😄
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal">
-    <div class="modal-card">
-      <div style="font-size:46px; line-height:1">🎉</div>
-      <h2 class="modal-title">Урааа! Я счастлив ❤️</h2>
-      <p class="modal-text" id="modalText">
-        Тогда официально: ты моя Валентинка 😘<br/>
-        Обещаю много обнимашек, вкусняшек и заботы.
-      </p>
-      <button class="close" id="closeBtn">Закрыть</button>
-      <div class="tiny">Сделано с любовью 💗</div>
-    </div>
-  </div>
-
-  <script>
-    // Hearts background
-    const hearts = document.getElementById('hearts');
-    const COUNT = 26;
-    for (let i = 0; i < COUNT; i++) {
-      const h = document.createElement('div');
-      h.className = 'heart';
-      const left = Math.random() * 100;
-      const size = 10 + Math.random() * 14;
-      const dur = 6 + Math.random() * 7;
-      const delay = Math.random() * 6;
-      h.style.left = left + 'vw';
-      h.style.width = size + 'px';
-      h.style.height = size + 'px';
-      h.style.animationDuration = dur + 's';
-      h.style.animationDelay = delay + 's';
-      h.style.opacity = 0.10 + Math.random() * 0.22;
-      hearts.appendChild(h);
+    .modal.on{
+      display:grid;
     }
 
-    // Buttons logic
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn  = document.getElementById('noBtn');
-    const modal  = document.getElementById('modal');
-    const closeBtn = document.getElementById('closeBtn');
-    const question = document.getElementById('question');
-
-    yesBtn.addEventListener('click', () => {
-      modal.classList.add('on');
-    });
-
-    closeBtn.addEventListener('click', () => {
-      modal.classList.remove('on');
-    });
-
-    // "No" button dodges the cursor
-    let noClicks = 0;
-    const phrases = [
-      "Точно нет? 🥺",
-      "А если подумать? 😅",
-      "Ну пожааалуйста 🙈",
-      "Я уже заказал обнимашки 😌",
-      "Окей… но кнопка не согласна 😄"
-    ];
-
-    function moveNoButton() {
-      const pad = 18;
-      const bw = noBtn.offsetWidth;
-      const bh = noBtn.offsetHeight;
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-
-      const x = Math.max(pad, Math.random() * (vw - bw - pad));
-      const y = Math.max(pad, Math.random() * (vh - bh - pad));
-
-      noBtn.style.position = 'fixed';
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
-    }
-
-    noBtn.addEventListener('mouseenter', () => moveNoButton());
-    noBtn.addEventListener('click', () => {
-      noClicks++;
-      question.textContent = phrases[Math.min(noClicks-1, phrases.length-1)];
-      moveNoButton();
-    });
-
-    window.addEventListener('resize', () => {
-      // keep within viewport after resize
-      if (noBtn.style.position === 'fixed') moveNoButton();
-    });
-
-    // Close modal on background click
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('on');
-    });
-  </script>
-</body>
-</html>
+    .modal-c
