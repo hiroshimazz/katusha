@@ -3,104 +3,242 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Для тебя ❤️</title>
+<title>Для Катюши ❤️</title>
 
 <style>
 :root{
   --accent:#ff2d55;
   --accent2:#ff7aa2;
-  --shadow: 0 20px 60px rgba(0,0,0,.15);
+  --bg1:#fff0f6;
+  --bg2:#ffe4ea;
+  --shadow:0 20px 60px rgba(0,0,0,.18);
 }
 *{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: linear-gradient(135deg, #fff0f6, #ffe4ea);
-  display:flex;
-  justify-content:center;
+/* ---------- SCREENS ---------- */
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* ---------- VIDEO SCREEN ---------- */
+.video-screen{position:relative;background:#000;overflow:hidden}
+
+#player{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+}
+
+/* Overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  text-align:center;
   padding:20px;
+  background:rgba(0,0,0,.5);
+  color:#fff;
+  z-index:5;
+  transition:.4s;
+}
+.overlay.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.overlay h1{
+  font-size:clamp(22px,3vw,34px);
+  margin-bottom:16px;
+}
+.btn{
+  border:none;
+  padding:14px 20px;
+  border-radius:14px;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 16px 30px rgba(255,45,85,.25);
 }
 
-.container{
-  width:min(900px, 100%);
+/* Cinema effect */
+.cinema{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  transition:.4s;
 }
-
-.video-wrapper{
-  position:relative;
-  padding-bottom:56.25%; /* 16:9 */
-  height:0;
-  overflow:hidden;
-  border-radius:20px;
-  box-shadow:var(--shadow);
-  margin-bottom:25px;
-}
-
-.video-wrapper iframe{
+.cinema.on{opacity:1}
+.bar{
   position:absolute;
-  top:0;
   left:0;
   width:100%;
-  height:100%;
-  border:none;
-  border-radius:20px;
+  height:10vh;
+  background:#000;
+}
+.bar.top{top:0}
+.bar.bottom{bottom:0}
+.vignette{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%);
 }
 
+/* ---------- VALENTINE ---------- */
+.valentine{
+  min-height:100vh;
+  padding:30px 20px;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, var(--bg1), transparent 60%),
+    radial-gradient(1200px 800px at 80% 90%, var(--bg2), transparent 55%),
+    linear-gradient(135deg,#fff,#ffeef4);
+}
 .card{
-  background:white;
-  border-radius:25px;
-  padding:30px;
+  width:min(820px,100%);
+  background:rgba(255,255,255,.85);
+  border-radius:28px;
+  padding:30px 24px;
   text-align:center;
   box-shadow:var(--shadow);
 }
-
-h1{
-  font-size:32px;
-  margin-bottom:10px;
-}
-
-p{
-  opacity:.85;
-  margin-bottom:20px;
-}
-
-.btn{
+.big-heart{
+  width:90px;height:90px;margin:0 auto 18px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
+  transform:rotate(45deg);
+  border-radius:18px;
+  position:relative;
+  animation:pulse 1.6s infinite;
+}
+.big-heart:before,.big-heart:after{
+  content:"";
+  position:absolute;
+  width:90px;height:90px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:50%;
+}
+.big-heart:before{left:-45px;top:0}
+.big-heart:after{left:0;top:-45px}
+@keyframes pulse{
+  0%,100%{transform:rotate(45deg) scale(1)}
+  50%{transform:rotate(45deg) scale(1.08)}
+}
+.card h2{font-size:clamp(24px,3vw,40px);margin-bottom:12px}
+.card p{opacity:.9;font-size:clamp(15px,2vw,18px);line-height:1.5}
+.btn2{
+  margin-top:20px;
   border:none;
-  padding:14px 22px;
+  padding:14px 20px;
   border-radius:14px;
-  color:white;
-  font-weight:700;
+  font-weight:800;
   cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- VIDEO SCREEN -->
+<section class="screen video-screen active" id="screenVideo">
+  <div id="player"></div>
 
-  <!-- YouTube видео -->
-  <div class="video-wrapper">
-    <iframe
-      src="https://www.youtube.com/embed/yrwPySr-zog?si=mZeuQRdo8uxIVPgZ"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+  <div class="cinema" id="cinema">
+    <div class="bar top"></div>
+    <div class="bar bottom"></div>
+    <div class="vignette"></div>
   </div>
 
-  <!-- Текст валентинки -->
+  <div class="overlay" id="overlay">
+    <div>
+      <h1>Если готова смотреть, жми❤️</h1>
+      <button class="btn" id="startBtn">▶ Смотреть</button>
+    </div>
+  </div>
+</section>
+
+<!-- VALENTINE -->
+<section class="screen valentine" id="screenValentine">
   <div class="card">
-    <h1>Катюша ❤️</h1>
+    <div class="big-heart"></div>
+    <h2>Катюша ❤️</h2>
     <p>
-      Это видео — потому что ты для меня особенная.  
-      И я хочу, чтобы ты это почувствовала.
+      Всё, что я хотел сказать — в этом моменте.
+      <br><br>
+      Ты для меня особенная.
+      И я хочу идти дальше — вместе с тобой.
     </p>
-
-    <button class="btn">Я люблю тебя 💖</button>
+    <button class="btn2" id="toFinal">если готова к самому важному шагу, нажимай.</button>
   </div>
+</section>
 
-</div>
+<!-- FINAL PAGE -->
+<section class="screen" id="screenFinal" style="min-height:100vh;display:grid;place-items:center;background:#0c0c0e;color:white;padding:30px;">
+  <div style="max-width:800px;text-align:center;">
+    <h2 style="font-size:32px;margin-bottom:20px;">Самое важное…</h2>
+    <p style="white-space:pre-wrap;font-size:18px;line-height:1.6;">
+ЗДЕСЬ ТЫ НАПИШЕШЬ СВОЙ ТЕКСТ
+    </p>
+  </div>
+</section>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+const VIDEO_ID = "yrwPySr-zog";
+
+let player;
+function onYouTubeIframeAPIReady(){
+  player = new YT.Player('player',{
+    videoId: VIDEO_ID,
+    playerVars:{
+      rel:0,
+      modestbranding:1,
+      playsinline:1
+    },
+    events:{
+      onStateChange:onPlayerStateChange
+    }
+  });
+}
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+const overlay = document.getElementById("overlay");
+const startBtn = document.getElementById("startBtn");
+const cinema = document.getElementById("cinema");
+const screenVideo = document.getElementById("screenVideo");
+const screenValentine = document.getElementById("screenValentine");
+const screenFinal = document.getElementById("screenFinal");
+
+startBtn.onclick = () => {
+  player.playVideo();
+};
+
+function onPlayerStateChange(e){
+  if(e.data === YT.PlayerState.PLAYING){
+    overlay.classList.add("hidden");
+    cinema.classList.add("on");
+  }
+  if(e.data === YT.PlayerState.ENDED){
+    showScreen(screenValentine);
+  }
+}
+
+function showScreen(screen){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  screen.classList.add("active");
+  window.scrollTo(0,0);
+}
+
+document.getElementById("toFinal").onclick = ()=>{
+  showScreen(screenFinal);
+};
+</script>
 
 </body>
 </html>
