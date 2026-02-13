@@ -169,4 +169,84 @@
       display:grid;
     }
 
-    .modal-c
+    .modal-card{
+      background:white;
+      border-radius:24px;
+      padding:28px;
+      width:min(600px,100%);
+      text-align:center;
+      box-shadow:var(--shadow);
+    }
+
+    .modal-card h2{
+      margin-top:10px;
+      font-size:clamp(22px,3vw,30px);
+    }
+
+    .close{
+      margin-top:16px;
+      background:rgba(0,0,0,.08);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="card">
+  <div class="big-heart"></div>
+
+  <h1>Для самой любимой ❤️</h1>
+
+  <p>
+    С тобой мир становится ярче, теплее и добрее.  
+    Спасибо, что ты есть в моей жизни.
+  </p>
+
+  <div class="question">
+    Будешь моей Валентинкой? 💌
+  </div>
+
+  <div class="btns">
+    <button class="yes" id="yesBtn">Да 😍</button>
+    <button class="no">Нет 😅</button>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div style="font-size:50px;">🎉</div>
+    <h2>Урааа! ❤️</h2>
+    <p>
+      Тогда официально: ты моя Валентинка 💖  
+      Обещаю много обнимашек, заботы и поцелуев 😘
+    </p>
+    <button class="close" id="closeBtn">Закрыть</button>
+  </div>
+</div>
+
+<script>
+  // Сердечки
+  const hearts = document.getElementById("hearts");
+  for(let i=0;i<25;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(6+Math.random()*6)+"s";
+    h.style.opacity=0.1+Math.random()*0.2;
+    hearts.appendChild(h);
+  }
+
+  // Модалка
+  const yesBtn=document.getElementById("yesBtn");
+  const modal=document.getElementById("modal");
+  const closeBtn=document.getElementById("closeBtn");
+
+  yesBtn.onclick=()=>modal.classList.add("on");
+  closeBtn.onclick=()=>modal.classList.remove("on");
+  modal.onclick=(e)=>{ if(e.target===modal) modal.classList.remove("on"); }
+</script>
+
+</body>
+</html>
