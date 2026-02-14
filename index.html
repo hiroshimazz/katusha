@@ -47,15 +47,10 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   text-align:center;
   padding:20px;
   transition:.6s;
+  z-index:5;
 }
-.overlay.hidden{
-  opacity:0;
-  visibility:hidden;
-}
-.overlay h1{
-  font-size:clamp(22px,3vw,34px);
-  margin:0 0 14px;
-}
+.overlay.hidden{opacity:0;visibility:hidden}
+.overlay h1{font-size:clamp(22px,3vw,34px);margin:0 0 14px}
 .overlay p{margin:0 0 18px;opacity:.85}
 .btn{
   padding:14px 22px;
@@ -77,19 +72,14 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   pointer-events:none;
   opacity:0;
   transition:.85s;
+  z-index:4;
 }
 .cinema.on{opacity:1}
-.bar{
-  position:absolute;
-  width:100%;
-  height:10vh;
-  background:#000;
-}
+.bar{position:absolute;width:100%;height:10vh;background:#000}
 .bar.top{top:0}
 .bar.bottom{bottom:0}
 .vignette{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.50) 100%);
 }
 
@@ -104,8 +94,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     linear-gradient(135deg,#fff,#ffeef4);
   overflow:hidden;
 }
-
-/* нежные фоновые сердечки */
 .val-hearts{
   position:absolute;
   inset:-40px;
@@ -131,7 +119,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 }
 .val-heart:before{left:-7px;top:0}
 .val-heart:after{left:0;top:-7px}
-
 @keyframes floatSoft{
   from{ transform: translateY(110vh) rotate(45deg); }
   to{ transform: translateY(-25vh) rotate(45deg); }
@@ -170,21 +157,11 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   50%     { filter: drop-shadow(0 0 20px rgba(255,120,160,.55)); }
 }
 
-.card h2{
-  font-size:clamp(24px,3vw,40px);
-  margin:0 0 12px;
-}
-.card p{
-  opacity:.9;
-  font-size:clamp(15px,2.1vw,18px);
-  line-height:1.55;
-  margin:0;
-}
-.card .sub{
-  margin-top:12px;
-  opacity:.75;
-  font-size:14px;
-}
+.card h2{font-size:clamp(24px,3vw,40px);margin:0 0 12px}
+.card p{opacity:.9;font-size:clamp(15px,2.1vw,18px);line-height:1.55;margin:0}
+.card .sub{margin-top:12px;opacity:.75;font-size:14px}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.btn.secondary{background: rgba(255,255,255,.10); box-shadow:none}
 
 /* ===== BLACK PAUSE ===== */
 .black-screen{
@@ -200,14 +177,8 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   padding:20px;
 }
 .pause-text.show{opacity:.85}
-.pause-text .t1{
-  font-size:clamp(18px,2.8vw,26px);
-  margin:0 0 10px;
-}
-.pause-text .t2{
-  margin:0;
-  opacity:.75;
-}
+.pause-text .t1{font-size:clamp(18px,2.8vw,26px);margin:0 0 10px}
+.pause-text .t2{margin:0;opacity:.75}
 
 /* ===== FINAL ===== */
 .final{
@@ -227,17 +198,12 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   box-shadow:var(--shadow);
   backdrop-filter: blur(10px);
 }
-.final-card h2{
-  margin:0 0 14px;
-  font-size:clamp(24px,3vw,38px);
-}
-
-/* Построчное появление текста */
+.final-card h2{margin:0 0 14px;font-size:clamp(24px,3vw,38px)}
 .lines{
   margin:0;
   white-space:pre-wrap;
   text-align:left;
-  max-width: 70ch;
+  max-width:70ch;
   margin-inline:auto;
   font-size:clamp(15px,2.2vw,18px);
   line-height:1.6;
@@ -247,17 +213,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   transform: translateY(10px);
   transition: opacity 1.2s ease, transform 1.2s ease;
 }
-.line.show{
-  opacity:.94;
-  transform: translateY(0);
-}
-
-/* small */
-.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-.btn.secondary{
-  background: rgba(255,255,255,.10);
-  box-shadow:none;
-}
+.line.show{opacity:.94;transform: translateY(0)}
 </style>
 </head>
 
@@ -288,7 +244,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 
   <div class="card">
     <img src="heart.png" class="heart-img" alt="heart">
-
     <h2>Катюша ❤️</h2>
 
     <p>
@@ -309,4 +264,126 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 
 <!-- BLACK PAUSE -->
 <section class="screen black-screen" id="blackScreen">
-  <div class
+  <div class="pause-text" id="pauseText">
+    <p class="t1">Подожди секунду…</p>
+    <p class="t2">Это действительно важный момент.</p>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="screen final" id="finalScreen">
+  <div class="final-card">
+    <h2>Самое важное…</h2>
+    <div class="lines" id="finalLines"></div>
+  </div>
+
+  <!-- ТВОЙ ТЕКСТ ПИШИ ВОТ ТУТ: можно любые символы, ничего не сломается -->
+  <div id="finalTextSource" style="display:none;">
+FINAL_TEXT_HERE
+  </div>
+</section>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+const VIDEO_ID = "yrwPySr-zog";
+
+let player;
+function onYouTubeIframeAPIReady(){
+  player = new YT.Player('player',{
+    videoId: VIDEO_ID,
+    playerVars:{ rel:0, modestbranding:1, playsinline:1 },
+    events:{ onStateChange:onStateChange }
+  });
+}
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+const overlay = document.getElementById("overlay");
+const cinema  = document.getElementById("cinema");
+
+function onStateChange(e){
+  if(e.data === YT.PlayerState.PLAYING){
+    overlay.classList.add("hidden");
+    cinema.classList.add("on");
+  }
+  if(e.data === YT.PlayerState.ENDED){
+    fadeTo("valentineScreen");
+  }
+}
+
+document.getElementById("startBtn").onclick = () => { try{ player.playVideo(); }catch{} };
+
+document.getElementById("backToVideo").onclick = () => {
+  fadeTo("videoScreen");
+  cinema.classList.remove("on");
+  overlay.classList.remove("hidden");
+  try { player.pauseVideo(); player.seekTo(0, true); } catch {}
+};
+
+document.getElementById("toFinal").onclick = () => dramaticFinal();
+
+function fadeTo(id){
+  const current = document.querySelector(".screen.active");
+  const next = document.getElementById(id);
+  current.classList.remove("active");
+  setTimeout(()=>next.classList.add("active"),350);
+}
+
+function dramaticFinal(){
+  fadeTo("blackScreen");
+  const pauseText = document.getElementById("pauseText");
+  setTimeout(()=>pauseText.classList.add("show"), 250);
+
+  setTimeout(()=>{
+    pauseText.classList.remove("show");
+    fadeTo("finalScreen");
+    setTimeout(buildFinalLines, 450);
+  }, 1900);
+}
+
+let built = false;
+function buildFinalLines(){
+  if (built) return;
+  built = true;
+
+  const src = document.getElementById("finalTextSource").textContent
+    .replace(/\r\n/g,"\n")
+    .trim();
+
+  const box = document.getElementById("finalLines");
+  const lines = src.split("\n");
+
+  box.innerHTML = "";
+  for (const t of lines){
+    const div = document.createElement("div");
+    div.className = "line";
+    div.textContent = (t === "" ? " " : t);
+    box.appendChild(div);
+  }
+
+  const lineEls = Array.from(box.querySelectorAll(".line"));
+  lineEls.forEach((el, i) => {
+    setTimeout(()=>el.classList.add("show"), 200 + i*420);
+  });
+}
+
+/* Soft hearts on valentine background */
+const valHearts = document.getElementById("valHearts");
+for(let i=0;i<18;i++){
+  const h=document.createElement("div");
+  h.className="val-heart";
+  const left=Math.random()*100;
+  const size=10+Math.random()*10;
+  const dur=10+Math.random()*10;
+  const delay=Math.random()*6;
+  h.style.left=left+"vw";
+  h.style.width=size+"px";
+  h.style.height=size+"px";
+  h.style.animationDuration=dur+"s";
+  h.style.animationDelay=delay+"s";
+  h.style.opacity=0.10+Math.random()*0.18;
+  valHearts.appendChild(h);
+}
+</script>
+
+</body>
+</html>
