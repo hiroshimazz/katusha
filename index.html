@@ -102,7 +102,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
 }
 
-/* ===== VALENTINE ===== */
+/* ===== VALENTINE (POSTCARD) ===== */
 .valentine{
   display:grid;
   place-items:center;
@@ -113,24 +113,92 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     linear-gradient(135deg,#fff,#ffeef4);
   overflow:hidden;
 }
-.card{
-  position:relative;
-  background:rgba(255,255,255,.92);
-  border-radius:28px;
-  padding:34px 26px;
-  text-align:center;
-  width:min(860px,100%);
-  box-shadow:var(--shadow);
-  border:1px solid rgba(255,255,255,.65);
-  backdrop-filter: blur(10px);
+
+/* “открытка” — рамка + бумажная текстура */
+.postcard{
+  width:min(920px,100%);
+  border-radius:32px;
+  padding:14px;
+  background:
+    linear-gradient(135deg, rgba(255,45,85,.20), rgba(255,122,162,.10)),
+    radial-gradient(1200px 800px at 15% 10%, rgba(255,255,255,.80), transparent 60%),
+    radial-gradient(1200px 800px at 85% 90%, rgba(255,255,255,.55), transparent 55%);
+  box-shadow: var(--shadow);
 }
 
-/* heart */
+.paper{
+  border-radius:26px;
+  background:
+    radial-gradient(900px 600px at 20% 0%, rgba(255,255,255,.95), rgba(255,255,255,.86) 50%, rgba(255,255,255,.92)),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.015), rgba(0,0,0,.015) 1px, rgba(255,255,255,0) 10px, rgba(255,255,255,0) 22px);
+  border:1px solid rgba(255,255,255,.75);
+  overflow:hidden;
+}
+
+.postcard-inner{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:0;
+  min-height: 520px;
+}
+
+/* левая половина под стикер */
+.sticker-side{
+  padding:26px;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+/* место под стикер (квадрат/прямоугольник) */
+.sticker-frame{
+  width:min(360px, 100%);
+  aspect-ratio: 1 / 1;
+  border-radius:22px;
+  background: rgba(255,45,85,.05);
+  border: 1px dashed rgba(255,45,85,.35);
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+/* если ты загрузишь sticker.png — он встанет сюда */
+.sticker-frame img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:14px;
+  transform: rotate(-2deg);
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.10));
+}
+
+/* подсказка, если картинки нет */
+.sticker-hint{
+  text-align:center;
+  padding:18px;
+  color: rgba(0,0,0,.55);
+  font-size:14px;
+  line-height:1.35;
+}
+.sticker-hint b{color: rgba(0,0,0,.75)}
+
+/* правая половина — текст */
+.text-side{
+  padding:30px 30px 26px;
+  border-left: 1px solid rgba(0,0,0,.06);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:14px;
+}
+
 .heart-emoji{
-  font-size:120px;
-  display:block;
-  margin:0 auto 18px;
+  font-size:72px;
+  line-height:1;
+  margin:0 0 2px;
   animation: doubleBeat 2.5s ease-in-out infinite, breatheGlow 4.5s ease-in-out infinite;
+  align-self:flex-start;
 }
 
 @keyframes doubleBeat{
@@ -142,45 +210,33 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   100% { transform: scale(1); }
 }
 @keyframes breatheGlow{
-  0%,100% { filter: drop-shadow(0 0 14px rgba(255,120,160,.4)); }
-  50%     { filter: drop-shadow(0 0 28px rgba(255,120,160,.7)); }
+  0%,100% { filter: drop-shadow(0 0 12px rgba(255,120,160,.35)); }
+  50%     { filter: drop-shadow(0 0 22px rgba(255,120,160,.65)); }
 }
 
-.card h2{
-  font-size:clamp(26px,3vw,44px);
-  margin:0 0 10px;
+.title{
+  margin:0;
+  font-size:clamp(26px,3vw,42px);
   line-height:1.1;
 }
-.subtitle{
-  margin:0 0 18px;
-  opacity:.72;
+.to{
+  margin:0;
+  opacity:.68;
   font-size:14px;
 }
 
-/* красивый текст-цитата */
 .quote{
-  text-align:left;
-  margin: 0 auto 18px;
-  max-width: 66ch;
-  padding: 16px 16px;
-  border-radius: 18px;
+  margin:0;
+  padding:16px 16px;
+  border-radius:18px;
   background: rgba(255, 45, 85, .06);
   border: 1px solid rgba(255, 45, 85, .14);
-}
-.quote .qmark{
-  font-size:28px;
-  line-height:1;
-  opacity:.5;
-  margin-bottom:6px;
-}
-.quote p{
-  margin:0;
   font-size:clamp(16px,2vw,18px);
   line-height:1.65;
   opacity:.92;
 }
 .quote .em{
-  font-weight:750;
+  font-weight:780;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   -webkit-background-clip: text;
   background-clip: text;
@@ -188,22 +244,29 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 }
 
 .question{
-  margin-top: 14px;
+  margin-top:4px;
   font-size:clamp(18px,2.2vw,20px);
-  font-weight:800;
+  font-weight:850;
 }
 .row{
-  margin-top:18px;
+  margin-top:6px;
   display:flex;
-  justify-content:center;
-  gap:14px;
+  gap:12px;
   flex-wrap:wrap;
+  align-items:center;
 }
 #noResponse{
-  margin-top:16px;
+  margin-top:10px;
   font-size:14px;
   opacity:.78;
   min-height: 20px;
+}
+
+/* responsive */
+@media (max-width: 840px){
+  .postcard-inner{grid-template-columns: 1fr;}
+  .text-side{border-left:none;border-top:1px solid rgba(0,0,0,.06)}
+  .sticker-frame{aspect-ratio: 16 / 10;}
 }
 
 /* ===== BLACK PAUSE ===== */
@@ -238,8 +301,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow);
 }
-
-/* убрали заголовок — оставили только текст */
 .lines{
   white-space:pre-wrap;
   font-size:clamp(18px,2.2vw,20px);
@@ -254,10 +315,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   transform:translateY(10px);
   transition:opacity 1.2s ease, transform 1.2s ease;
 }
-.line.show{
-  opacity:1;
-  transform:translateY(0);
-}
+.line.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 
@@ -282,27 +340,51 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   </div>
 </section>
 
-<!-- VALENTINE -->
+<!-- VALENTINE (POSTCARD) -->
 <section class="screen valentine" id="valentineScreen">
-  <div class="card">
-    <div class="heart-emoji">❤️</div>
+  <div class="postcard">
+    <div class="paper">
+      <div class="postcard-inner">
 
-    <h2>Пупсик 😌</h2>
+        <!-- LEFT: sticker -->
+        <div class="sticker-side">
+          <div class="sticker-frame">
+            <!-- ✅ Вставь свой стикер: залей файл в репо рядом с index.html и назови sticker.png -->
+            <!-- Если файла нет — будет подсказка ниже -->
+            <img src="sticker.png" alt="sticker"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="sticker-hint" style="display:none;">
+              <b>Тут будет твой стикер</b><br>
+              Залей файл в репозиторий рядом с <b>index.html</b><br>
+              и назови его <b>sticker.png</b>
+            </div>
+          </div>
+        </div>
 
-    <div class="quote">
-      <div class="qmark">“</div>
-      <p><span class="em">В твоих глазах я вижу целый мир</span>, полный нежности и тепла.</p>
-      <p style="margin-top:10px;">И мне хочется быть рядом — не только сегодня.</p>
+        <!-- RIGHT: text -->
+        <div class="text-side">
+          <div class="heart-emoji">❤️</div>
+
+          <h2 class="title">Пупсик 😌</h2>
+          <p class="to">для тебя — маленькая открытка</p>
+
+          <div class="quote">
+            <span class="em">В твоих глазах я вижу целый мир</span>, полный нежности и тепла.
+            <div style="margin-top:10px; opacity:.9;">
+              Будешь моей валентинкой? 💌
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn" id="yesBtn">Да ❤️</button>
+            <button class="btn secondary" id="noBtn">Нет 😅</button>
+          </div>
+
+          <div id="noResponse"></div>
+        </div>
+
+      </div>
     </div>
-
-    <div class="question">Будешь моей валентинкой? 💌</div>
-
-    <div class="row">
-      <button class="btn" id="yesBtn">Да ❤️</button>
-      <button class="btn secondary" id="noBtn">Нет 😅</button>
-    </div>
-
-    <div id="noResponse"></div>
   </div>
 </section>
 
