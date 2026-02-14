@@ -68,8 +68,12 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   transition: transform .15s ease;
 }
 .btn:active{transform:scale(.98)}
+
+/* ВИДИМАЯ кнопка Нет */
 .btn.secondary{
-  background: rgba(255,255,255,.10);
+  background: rgba(0,0,0,.06);
+  color:#111;
+  border: 1px solid rgba(0,0,0,.10);
   box-shadow:none;
 }
 
@@ -125,7 +129,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   animation: doubleBeat 2.5s ease-in-out infinite, breatheGlow 4.5s ease-in-out infinite;
 }
 
-/* двойной удар */
 @keyframes doubleBeat{
   0%   { transform: scale(1); }
   12%  { transform: scale(1.08); }
@@ -135,7 +138,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   100% { transform: scale(1); }
 }
 
-/* нежное свечение */
 @keyframes breatheGlow{
   0%,100% { filter: drop-shadow(0 0 14px rgba(255,120,160,.4)); }
   50%     { filter: drop-shadow(0 0 28px rgba(255,120,160,.7)); }
@@ -249,7 +251,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     <h2>Пупсик 😌</h2>
 
     <p>
-      Слушай… без пафоса.
+      Слушай…
       <br><br>
       Мне с тобой просто хорошо.
       <br><br>
@@ -279,9 +281,8 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     <div class="lines" id="finalLines"></div>
   </div>
 
-  <!-- ФИНАЛЬНЫЙ ТЕКСТ ВОТ ТУТ -->
   <div id="finalTextSource" style="display:none;">
-Катюша…
+Катюшкинс…
 
 Подними глаза.
 Посмотри на меня.
@@ -326,7 +327,7 @@ function fadeTo(id){
   setTimeout(()=>next.classList.add("active"),350);
 }
 
-/* ===== Valentine logic ===== */
+/* Valentine logic */
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const noResponse = document.getElementById("noResponse");
@@ -345,8 +346,7 @@ noBtn.addEventListener("click", () => {
   noResponse.textContent = funnyResponses[noClicks % funnyResponses.length];
   noClicks++;
 
-  // растим кнопку "Да"
-  scale = Math.min(2.2, scale + 0.15); // ограничение чтобы не улетела
+  scale = Math.min(2.2, scale + 0.15);
   yesBtn.style.transform = `scale(${scale})`;
 });
 
@@ -354,7 +354,7 @@ yesBtn.addEventListener("click", () => {
   dramaticFinal();
 });
 
-/* ===== Dramatic pause -> final ===== */
+/* Dramatic pause -> final */
 function dramaticFinal(){
   fadeTo("blackScreen");
   setTimeout(()=>document.getElementById("pauseText").classList.add("show"),300);
