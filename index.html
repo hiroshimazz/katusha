@@ -68,7 +68,12 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   transition: transform .15s ease;
 }
 .btn:active{transform:scale(.98)}
+.btn.secondary{
+  background: rgba(255,255,255,.10);
+  box-shadow:none;
+}
 
+/* cinematic effect */
 .cinema{
   position:absolute;
   inset:0;
@@ -113,7 +118,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   box-shadow:var(--shadow);
 }
 
-/* 💖 ЭМОДЗИ СЕРДЦЕ */
 .heart-emoji{
   font-size:120px;
   display:block;
@@ -151,6 +155,14 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   margin-top:22px;
   display:flex;
   justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+#noResponse{
+  margin-top:18px;
+  font-size:14px;
+  opacity:.75;
+  min-height: 20px;
 }
 
 /* ===== BLACK PAUSE ===== */
@@ -164,6 +176,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   opacity:0;
   transition:opacity .8s ease;
   text-align:center;
+  padding:20px;
 }
 .pause-text.show{opacity:.85}
 
@@ -185,12 +198,15 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 }
 .final-card h2{
   font-size:clamp(24px,3vw,38px);
-  margin-bottom:18px;
+  margin:0 0 18px;
+  text-align:center;
 }
 .lines{
   white-space:pre-wrap;
   font-size:clamp(16px,2vw,18px);
   line-height:1.6;
+  max-width: 70ch;
+  margin-inline:auto;
 }
 .line{
   opacity:0;
@@ -229,17 +245,23 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 <section class="screen valentine" id="valentineScreen">
   <div class="card">
     <div class="heart-emoji">❤️</div>
-    <h2>Катюша ❤️</h2>
+
+    <h2>Пупсик 😌</h2>
+
     <p>
-      Всё, что я хотел сказать —
-      по-настоящему.
+      Слушай… без пафоса.
       <br><br>
-      Ты для меня — очень важный человек.
+      Мне с тобой просто хорошо.
+      <br><br>
+      Будешь моей валентинкой?
     </p>
 
     <div class="row">
-      <button class="btn" id="toFinal">если готова к самому важному шагу, нажимай.</button>
+      <button class="btn" id="yesBtn">Да ❤️</button>
+      <button class="btn secondary" id="noBtn">Нет 😅</button>
     </div>
+
+    <div id="noResponse"></div>
   </div>
 </section>
 
@@ -257,9 +279,14 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     <div class="lines" id="finalLines"></div>
   </div>
 
-  <!-- ВСТАВЬ СВОЙ ТЕКСТ НИЖЕ -->
+  <!-- ФИНАЛЬНЫЙ ТЕКСТ ВОТ ТУТ -->
   <div id="finalTextSource" style="display:none;">
-ЗДЕСЬ ТЫ НАПИШЕШЬ СВОЙ ТЕКСТ
+Катюша…
+
+Подними глаза.
+Посмотри на меня.
+
+И послушай.
   </div>
 </section>
 
@@ -271,6 +298,7 @@ let player;
 function onYouTubeIframeAPIReady(){
   player = new YT.Player('player',{
     videoId: VIDEO_ID,
+    playerVars: { rel:0, modestbranding:1, playsinline:1 },
     events:{ onStateChange:onStateChange }
   });
 }
@@ -289,16 +317,44 @@ function onStateChange(e){
   }
 }
 
-document.getElementById("startBtn").onclick=()=>player.playVideo();
-document.getElementById("toFinal").onclick=()=>dramaticFinal();
+document.getElementById("startBtn").onclick = () => player.playVideo();
 
 function fadeTo(id){
-  const current=document.querySelector(".screen.active");
-  const next=document.getElementById(id);
+  const current = document.querySelector(".screen.active");
+  const next = document.getElementById(id);
   current.classList.remove("active");
   setTimeout(()=>next.classList.add("active"),350);
 }
 
+/* ===== Valentine logic ===== */
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const noResponse = document.getElementById("noResponse");
+
+const funnyResponses = [
+  "Ты уверена? Может тебе на польский перевести? 😄",
+  "Хм… это точно правильная кнопка? 🤔",
+  "Напоминаю… я сижу рядом и всё вижу 😌",
+  "Последняя попытка. Можешь у меня спросить, куда нажимать 😏"
+];
+
+let noClicks = 0;
+let scale = 1;
+
+noBtn.addEventListener("click", () => {
+  noResponse.textContent = funnyResponses[noClicks % funnyResponses.length];
+  noClicks++;
+
+  // растим кнопку "Да"
+  scale = Math.min(2.2, scale + 0.15); // ограничение чтобы не улетела
+  yesBtn.style.transform = `scale(${scale})`;
+});
+
+yesBtn.addEventListener("click", () => {
+  dramaticFinal();
+});
+
+/* ===== Dramatic pause -> final ===== */
 function dramaticFinal(){
   fadeTo("blackScreen");
   setTimeout(()=>document.getElementById("pauseText").classList.add("show"),300);
@@ -314,16 +370,19 @@ function buildFinalLines(){
   if(built) return;
   built=true;
 
-  const src=document.getElementById("finalTextSource").textContent.trim();
-  const box=document.getElementById("finalLines");
-  const lines=src.split("\n");
+  const src = document.getElementById("finalTextSource").textContent
+    .replace(/\r\n/g,"\n")
+    .trim();
+
+  const box = document.getElementById("finalLines");
+  const lines = src.split("\n");
 
   lines.forEach((text,i)=>{
     const div=document.createElement("div");
     div.className="line";
-    div.textContent=text;
+    div.textContent = text === "" ? " " : text;
     box.appendChild(div);
-    setTimeout(()=>div.classList.add("show"),i*500+400);
+    setTimeout(()=>div.classList.add("show"), i*520 + 300);
   });
 }
 </script>
