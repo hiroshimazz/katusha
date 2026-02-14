@@ -11,6 +11,7 @@
   --accent2:#ff7aa2;
   --bg1:#fff0f6;
   --bg2:#ffe4ea;
+  --shadow:0 20px 60px rgba(0,0,0,.18);
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#000}
@@ -21,7 +22,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   inset:0;
   opacity:0;
   visibility:hidden;
-  transition:opacity .8s ease;
+  transition:opacity .85s ease;
 }
 .screen.active{
   opacity:1;
@@ -41,26 +42,33 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   inset:0;
   display:grid;
   place-items:center;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.52);
   color:#fff;
   text-align:center;
+  padding:20px;
   transition:.6s;
 }
 .overlay.hidden{
   opacity:0;
   visibility:hidden;
 }
-.overlay h1{font-size:clamp(22px,3vw,34px)}
+.overlay h1{
+  font-size:clamp(22px,3vw,34px);
+  margin:0 0 14px;
+}
+.overlay p{margin:0 0 18px;opacity:.85}
 .btn{
-  margin-top:15px;
   padding:14px 22px;
   border-radius:14px;
   border:none;
-  font-weight:800;
+  font-weight:850;
   cursor:pointer;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#fff;
+  box-shadow:0 16px 30px rgba(255,45,85,.25);
+  transition: transform .12s ease, filter .12s ease;
 }
+.btn:active{transform:scale(.98)}
 
 /* cinematic effect */
 .cinema{
@@ -68,7 +76,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   inset:0;
   pointer-events:none;
   opacity:0;
-  transition:.8s;
+  transition:.85s;
 }
 .cinema.on{opacity:1}
 .bar{
@@ -82,71 +90,173 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 .vignette{
   position:absolute;
   inset:0;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%);
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.50) 100%);
 }
 
 /* ===== VALENTINE ===== */
 .valentine{
   display:grid;
   place-items:center;
-  padding:30px;
+  padding:30px 18px;
   background:
     radial-gradient(1200px 800px at 20% 10%, var(--bg1), transparent 60%),
     radial-gradient(1200px 800px at 80% 90%, var(--bg2), transparent 55%),
     linear-gradient(135deg,#fff,#ffeef4);
+  overflow:hidden;
 }
+
+/* нежные фоновые сердечки */
+.val-hearts{
+  position:absolute;
+  inset:-40px;
+  pointer-events:none;
+  opacity:.28;
+  filter: blur(.2px);
+}
+.val-heart{
+  position:absolute;
+  width:14px;height:14px;
+  background: linear-gradient(135deg,var(--accent),var(--accent2));
+  transform: rotate(45deg);
+  border-radius:4px;
+  opacity:.25;
+  animation: floatSoft linear infinite;
+}
+.val-heart:before,.val-heart:after{
+  content:"";
+  position:absolute;
+  width:14px;height:14px;
+  background: linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:50%;
+}
+.val-heart:before{left:-7px;top:0}
+.val-heart:after{left:0;top:-7px}
+
+@keyframes floatSoft{
+  from{ transform: translateY(110vh) rotate(45deg); }
+  to{ transform: translateY(-25vh) rotate(45deg); }
+}
+
 .card{
-  background:rgba(255,255,255,.9);
+  position:relative;
+  background:rgba(255,255,255,.88);
   border-radius:28px;
   padding:30px 24px;
   text-align:center;
-  width:min(800px,100%);
-  box-shadow:0 20px 60px rgba(0,0,0,.15);
+  width:min(820px,100%);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.55);
+  backdrop-filter: blur(10px);
 }
-.big-heart{
-  width:90px;height:90px;margin:0 auto 18px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  transform:rotate(45deg);
-  border-radius:18px;
-  position:relative;
-  animation:pulse 1.6s infinite;
+
+/* PNG heart + double beat + breathing glow */
+.heart-img{
+  width:132px;
+  display:block;
+  margin:0 auto 18px;
+  animation: doubleBeat 2.5s ease-in-out infinite, breatheGlow 4.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 14px rgba(255,120,160,.42));
 }
-.big-heart:before,.big-heart:after{
-  content:"";
-  position:absolute;
-  width:90px;height:90px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:50%;
+@keyframes doubleBeat{
+  0%   { transform: scale(1); }
+  12%  { transform: scale(1.08); }
+  20%  { transform: scale(1); }
+  30%  { transform: scale(1.14); }
+  40%  { transform: scale(1); }
+  100% { transform: scale(1); }
 }
-.big-heart:before{left:-45px}
-.big-heart:after{top:-45px}
-@keyframes pulse{
-  0%,100%{transform:rotate(45deg) scale(1)}
-  50%{transform:rotate(45deg) scale(1.08)}
+@keyframes breatheGlow{
+  0%,100% { filter: drop-shadow(0 0 12px rgba(255,120,160,.32)); }
+  50%     { filter: drop-shadow(0 0 20px rgba(255,120,160,.55)); }
+}
+
+.card h2{
+  font-size:clamp(24px,3vw,40px);
+  margin:0 0 12px;
+}
+.card p{
+  opacity:.9;
+  font-size:clamp(15px,2.1vw,18px);
+  line-height:1.55;
+  margin:0;
+}
+.card .sub{
+  margin-top:12px;
+  opacity:.75;
+  font-size:14px;
 }
 
 /* ===== BLACK PAUSE ===== */
 .black-screen{
   background:#000;
+  display:grid;
+  place-items:center;
+  color:#fff;
+}
+.pause-text{
+  opacity:0;
+  transition: opacity .8s ease;
+  text-align:center;
+  padding:20px;
+}
+.pause-text.show{opacity:.85}
+.pause-text .t1{
+  font-size:clamp(18px,2.8vw,26px);
+  margin:0 0 10px;
+}
+.pause-text .t2{
+  margin:0;
+  opacity:.75;
 }
 
 /* ===== FINAL ===== */
 .final{
   display:grid;
   place-items:center;
-  background:#000;
+  background:#0c0c0e;
   color:white;
-  padding:30px;
+  padding:30px 18px;
   text-align:center;
 }
-.final-content{
-  opacity:0;
-  transform:translateY(10px);
-  transition:opacity 1.2s ease, transform 1.2s ease;
+.final-card{
+  width:min(860px,100%);
+  border-radius:26px;
+  padding:26px 22px;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(10px);
 }
-.final-content.show{
-  opacity:1;
-  transform:translateY(0);
+.final-card h2{
+  margin:0 0 14px;
+  font-size:clamp(24px,3vw,38px);
+}
+
+/* Построчное появление текста */
+.lines{
+  margin:0;
+  white-space:pre-wrap;
+  text-align:left;
+  max-width: 70ch;
+  margin-inline:auto;
+  font-size:clamp(15px,2.2vw,18px);
+  line-height:1.6;
+}
+.line{
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+.line.show{
+  opacity:.94;
+  transform: translateY(0);
+}
+
+/* small */
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.btn.secondary{
+  background: rgba(255,255,255,.10);
+  box-shadow:none;
 }
 </style>
 </head>
@@ -156,14 +266,17 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 <!-- VIDEO -->
 <section class="screen video-screen active" id="videoScreen">
   <div id="player"></div>
+
   <div class="cinema" id="cinema">
     <div class="bar top"></div>
     <div class="bar bottom"></div>
     <div class="vignette"></div>
   </div>
+
   <div class="overlay" id="overlay">
     <div>
       <h1>Если готова смотреть, жми❤️</h1>
+      <p>Лучше со звуком. Если можно — надень наушники.</p>
       <button class="btn" id="startBtn">▶ Смотреть</button>
     </div>
   </div>
@@ -171,77 +284,29 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 
 <!-- VALENTINE -->
 <section class="screen valentine" id="valentineScreen">
+  <div class="val-hearts" id="valHearts"></div>
+
   <div class="card">
-    <div class="big-heart"></div>
+    <img src="heart.png" class="heart-img" alt="heart">
+
     <h2>Катюша ❤️</h2>
+
     <p>
-      Всё, что я хотел сказать —
-      по-настоящему.
+      Я хотел, чтобы ты почувствовала этот момент.
+      <br><br>
+      Ты для меня — не “просто человек”.
+      Ты — мой дом, моё спокойствие и моё счастье.
     </p>
-    <button class="btn" id="toFinal">если готова к самому важному шагу, нажимай.</button>
+
+    <div class="sub">Дальше будет то, что я давно хотел сказать.</div>
+
+    <div class="row">
+      <button class="btn" id="toFinal">если готова к самому важному шагу, нажимай.</button>
+      <button class="btn secondary" id="backToVideo">вернуться на видео</button>
+    </div>
   </div>
 </section>
 
 <!-- BLACK PAUSE -->
-<section class="screen black-screen" id="blackScreen"></section>
-
-<!-- FINAL -->
-<section class="screen final" id="finalScreen">
-  <div class="final-content" id="finalContent">
-    <h2>Самое важное…</h2>
-    <p style="white-space:pre-wrap;font-size:20px;line-height:1.6;">
-ЗДЕСЬ ТЫ НАПИШЕШЬ СВОЙ ТЕКСТ
-    </p>
-  </div>
-</section>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-const VIDEO_ID = "yrwPySr-zog";
-
-let player;
-function onYouTubeIframeAPIReady(){
-  player = new YT.Player('player',{
-    videoId:VIDEO_ID,
-    events:{onStateChange:onStateChange}
-  });
-}
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-
-const overlay=document.getElementById("overlay");
-const cinema=document.getElementById("cinema");
-
-function onStateChange(e){
-  if(e.data===YT.PlayerState.PLAYING){
-    overlay.classList.add("hidden");
-    cinema.classList.add("on");
-  }
-  if(e.data===YT.PlayerState.ENDED){
-    fadeTo("valentineScreen");
-  }
-}
-
-document.getElementById("startBtn").onclick=()=>player.playVideo();
-document.getElementById("toFinal").onclick=()=>dramaticFinal();
-
-function fadeTo(id){
-  const current=document.querySelector(".screen.active");
-  const next=document.getElementById(id);
-  current.classList.remove("active");
-  setTimeout(()=>next.classList.add("active"),400);
-}
-
-function dramaticFinal(){
-  fadeTo("blackScreen");
-
-  setTimeout(()=>{
-    fadeTo("finalScreen");
-    setTimeout(()=>{
-      document.getElementById("finalContent").classList.add("show");
-    },400);
-  },1800); // пауза 1.8 секунды
-}
-</script>
-
-</body>
-</html>
+<section class="screen black-screen" id="blackScreen">
+  <div class
