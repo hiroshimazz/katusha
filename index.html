@@ -22,7 +22,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   inset:0;
   opacity:0;
   visibility:hidden;
-  transition:opacity .85s ease;
+  transition:opacity .9s ease;
 }
 .screen.active{
   opacity:1;
@@ -42,7 +42,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   inset:0;
   display:grid;
   place-items:center;
-  background:rgba(0,0,0,.52);
+  background:rgba(0,0,0,.55);
   color:#fff;
   text-align:center;
   padding:20px;
@@ -50,8 +50,12 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   z-index:5;
 }
 .overlay.hidden{opacity:0;visibility:hidden}
-.overlay h1{font-size:clamp(22px,3vw,34px);margin:0 0 14px}
+.overlay h1{
+  font-size:clamp(22px,3vw,34px);
+  margin:0 0 14px;
+}
 .overlay p{margin:0 0 18px;opacity:.85}
+
 .btn{
   padding:14px 22px;
   border-radius:14px;
@@ -61,26 +65,31 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#fff;
   box-shadow:0 16px 30px rgba(255,45,85,.25);
-  transition: transform .12s ease, filter .12s ease;
+  transition: transform .15s ease;
 }
 .btn:active{transform:scale(.98)}
 
-/* cinematic effect */
 .cinema{
   position:absolute;
   inset:0;
   pointer-events:none;
   opacity:0;
-  transition:.85s;
+  transition:.9s;
   z-index:4;
 }
 .cinema.on{opacity:1}
-.bar{position:absolute;width:100%;height:10vh;background:#000}
+.bar{
+  position:absolute;
+  width:100%;
+  height:10vh;
+  background:#000;
+}
 .bar.top{top:0}
 .bar.bottom{bottom:0}
 .vignette{
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.50) 100%);
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
 }
 
 /* ===== VALENTINE ===== */
@@ -94,56 +103,25 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     linear-gradient(135deg,#fff,#ffeef4);
   overflow:hidden;
 }
-.val-hearts{
-  position:absolute;
-  inset:-40px;
-  pointer-events:none;
-  opacity:.28;
-  filter: blur(.2px);
-}
-.val-heart{
-  position:absolute;
-  width:14px;height:14px;
-  background: linear-gradient(135deg,var(--accent),var(--accent2));
-  transform: rotate(45deg);
-  border-radius:4px;
-  opacity:.25;
-  animation: floatSoft linear infinite;
-}
-.val-heart:before,.val-heart:after{
-  content:"";
-  position:absolute;
-  width:14px;height:14px;
-  background: linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:50%;
-}
-.val-heart:before{left:-7px;top:0}
-.val-heart:after{left:0;top:-7px}
-@keyframes floatSoft{
-  from{ transform: translateY(110vh) rotate(45deg); }
-  to{ transform: translateY(-25vh) rotate(45deg); }
-}
-
 .card{
   position:relative;
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.9);
   border-radius:28px;
-  padding:30px 24px;
+  padding:32px 24px;
   text-align:center;
   width:min(820px,100%);
   box-shadow:var(--shadow);
-  border:1px solid rgba(255,255,255,.55);
-  backdrop-filter: blur(10px);
 }
 
-/* PNG heart + double beat + breathing glow */
-.heart-img{
-  width:132px;
+/* 💖 ЭМОДЗИ СЕРДЦЕ */
+.heart-emoji{
+  font-size:120px;
   display:block;
   margin:0 auto 18px;
-  animation: doubleBeat 2.5s ease-in-out infinite, breatheGlow 4.2s ease-in-out infinite;
-  filter: drop-shadow(0 0 14px rgba(255,120,160,.42));
+  animation: doubleBeat 2.5s ease-in-out infinite, breatheGlow 4.5s ease-in-out infinite;
 }
+
+/* двойной удар */
 @keyframes doubleBeat{
   0%   { transform: scale(1); }
   12%  { transform: scale(1.08); }
@@ -152,16 +130,28 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   40%  { transform: scale(1); }
   100% { transform: scale(1); }
 }
+
+/* нежное свечение */
 @keyframes breatheGlow{
-  0%,100% { filter: drop-shadow(0 0 12px rgba(255,120,160,.32)); }
-  50%     { filter: drop-shadow(0 0 20px rgba(255,120,160,.55)); }
+  0%,100% { filter: drop-shadow(0 0 14px rgba(255,120,160,.4)); }
+  50%     { filter: drop-shadow(0 0 28px rgba(255,120,160,.7)); }
 }
 
-.card h2{font-size:clamp(24px,3vw,40px);margin:0 0 12px}
-.card p{opacity:.9;font-size:clamp(15px,2.1vw,18px);line-height:1.55;margin:0}
-.card .sub{margin-top:12px;opacity:.75;font-size:14px}
-.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-.btn.secondary{background: rgba(255,255,255,.10); box-shadow:none}
+.card h2{
+  font-size:clamp(26px,3vw,42px);
+  margin:0 0 14px;
+}
+.card p{
+  font-size:clamp(16px,2vw,18px);
+  line-height:1.6;
+  opacity:.9;
+  margin:0;
+}
+.row{
+  margin-top:22px;
+  display:flex;
+  justify-content:center;
+}
 
 /* ===== BLACK PAUSE ===== */
 .black-screen{
@@ -172,13 +162,10 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 }
 .pause-text{
   opacity:0;
-  transition: opacity .8s ease;
+  transition:opacity .8s ease;
   text-align:center;
-  padding:20px;
 }
 .pause-text.show{opacity:.85}
-.pause-text .t1{font-size:clamp(18px,2.8vw,26px);margin:0 0 10px}
-.pause-text .t2{margin:0;opacity:.75}
 
 /* ===== FINAL ===== */
 .final{
@@ -187,7 +174,6 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   background:#0c0c0e;
   color:white;
   padding:30px 18px;
-  text-align:center;
 }
 .final-card{
   width:min(860px,100%);
@@ -195,25 +181,26 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   padding:26px 22px;
   background: rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:var(--shadow);
   backdrop-filter: blur(10px);
 }
-.final-card h2{margin:0 0 14px;font-size:clamp(24px,3vw,38px)}
+.final-card h2{
+  font-size:clamp(24px,3vw,38px);
+  margin-bottom:18px;
+}
 .lines{
-  margin:0;
   white-space:pre-wrap;
-  text-align:left;
-  max-width:70ch;
-  margin-inline:auto;
-  font-size:clamp(15px,2.2vw,18px);
+  font-size:clamp(16px,2vw,18px);
   line-height:1.6;
 }
 .line{
   opacity:0;
-  transform: translateY(10px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  transform:translateY(10px);
+  transition:opacity 1.2s ease, transform 1.2s ease;
 }
-.line.show{opacity:.94;transform: translateY(0)}
+.line.show{
+  opacity:1;
+  transform:translateY(0);
+}
 </style>
 </head>
 
@@ -232,7 +219,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
   <div class="overlay" id="overlay">
     <div>
       <h1>Если готова смотреть, жми❤️</h1>
-      <p>Лучше со звуком. Если можно — надень наушники.</p>
+      <p>Лучше со звуком</p>
       <button class="btn" id="startBtn">▶ Смотреть</button>
     </div>
   </div>
@@ -240,24 +227,18 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 
 <!-- VALENTINE -->
 <section class="screen valentine" id="valentineScreen">
-  <div class="val-hearts" id="valHearts"></div>
-
   <div class="card">
-    <img src="heart.png" class="heart-img" alt="heart">
+    <div class="heart-emoji">❤️</div>
     <h2>Катюша ❤️</h2>
-
     <p>
-      Я хотел, чтобы ты почувствовала этот момент.
+      Всё, что я хотел сказать —
+      по-настоящему.
       <br><br>
-      Ты для меня — не “просто человек”.
-      Ты — мой дом, моё спокойствие и моё счастье.
+      Ты для меня — очень важный человек.
     </p>
-
-    <div class="sub">Дальше будет то, что я давно хотел сказать.</div>
 
     <div class="row">
       <button class="btn" id="toFinal">если готова к самому важному шагу, нажимай.</button>
-      <button class="btn secondary" id="backToVideo">вернуться на видео</button>
     </div>
   </div>
 </section>
@@ -265,8 +246,7 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
 <!-- BLACK PAUSE -->
 <section class="screen black-screen" id="blackScreen">
   <div class="pause-text" id="pauseText">
-    <p class="t1">Подожди секунду…</p>
-    <p class="t2">Это действительно важный момент.</p>
+    Подожди секунду… Это важно.
   </div>
 </section>
 
@@ -277,9 +257,9 @@ html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Robo
     <div class="lines" id="finalLines"></div>
   </div>
 
-  <!-- ТВОЙ ТЕКСТ ПИШИ ВОТ ТУТ: можно любые символы, ничего не сломается -->
+  <!-- ВСТАВЬ СВОЙ ТЕКСТ НИЖЕ -->
   <div id="finalTextSource" style="display:none;">
-FINAL_TEXT_HERE
+ЗДЕСЬ ТЫ НАПИШЕШЬ СВОЙ ТЕКСТ
   </div>
 </section>
 
@@ -291,7 +271,6 @@ let player;
 function onYouTubeIframeAPIReady(){
   player = new YT.Player('player',{
     videoId: VIDEO_ID,
-    playerVars:{ rel:0, modestbranding:1, playsinline:1 },
     events:{ onStateChange:onStateChange }
   });
 }
@@ -301,87 +280,51 @@ const overlay = document.getElementById("overlay");
 const cinema  = document.getElementById("cinema");
 
 function onStateChange(e){
-  if(e.data === YT.PlayerState.PLAYING){
+  if(e.data===YT.PlayerState.PLAYING){
     overlay.classList.add("hidden");
     cinema.classList.add("on");
   }
-  if(e.data === YT.PlayerState.ENDED){
+  if(e.data===YT.PlayerState.ENDED){
     fadeTo("valentineScreen");
   }
 }
 
-document.getElementById("startBtn").onclick = () => { try{ player.playVideo(); }catch{} };
-
-document.getElementById("backToVideo").onclick = () => {
-  fadeTo("videoScreen");
-  cinema.classList.remove("on");
-  overlay.classList.remove("hidden");
-  try { player.pauseVideo(); player.seekTo(0, true); } catch {}
-};
-
-document.getElementById("toFinal").onclick = () => dramaticFinal();
+document.getElementById("startBtn").onclick=()=>player.playVideo();
+document.getElementById("toFinal").onclick=()=>dramaticFinal();
 
 function fadeTo(id){
-  const current = document.querySelector(".screen.active");
-  const next = document.getElementById(id);
+  const current=document.querySelector(".screen.active");
+  const next=document.getElementById(id);
   current.classList.remove("active");
   setTimeout(()=>next.classList.add("active"),350);
 }
 
 function dramaticFinal(){
   fadeTo("blackScreen");
-  const pauseText = document.getElementById("pauseText");
-  setTimeout(()=>pauseText.classList.add("show"), 250);
+  setTimeout(()=>document.getElementById("pauseText").classList.add("show"),300);
 
   setTimeout(()=>{
-    pauseText.classList.remove("show");
     fadeTo("finalScreen");
-    setTimeout(buildFinalLines, 450);
-  }, 1900);
+    buildFinalLines();
+  },1900);
 }
 
-let built = false;
+let built=false;
 function buildFinalLines(){
-  if (built) return;
-  built = true;
+  if(built) return;
+  built=true;
 
-  const src = document.getElementById("finalTextSource").textContent
-    .replace(/\r\n/g,"\n")
-    .trim();
+  const src=document.getElementById("finalTextSource").textContent.trim();
+  const box=document.getElementById("finalLines");
+  const lines=src.split("\n");
 
-  const box = document.getElementById("finalLines");
-  const lines = src.split("\n");
-
-  box.innerHTML = "";
-  for (const t of lines){
-    const div = document.createElement("div");
-    div.className = "line";
-    div.textContent = (t === "" ? " " : t);
+  lines.forEach((text,i)=>{
+    const div=document.createElement("div");
+    div.className="line";
+    div.textContent=text;
     box.appendChild(div);
-  }
-
-  const lineEls = Array.from(box.querySelectorAll(".line"));
-  lineEls.forEach((el, i) => {
-    setTimeout(()=>el.classList.add("show"), 200 + i*420);
+    setTimeout(()=>div.classList.add("show"),i*500+400);
   });
-}
-
-/* Soft hearts on valentine background */
-const valHearts = document.getElementById("valHearts");
-for(let i=0;i<18;i++){
-  const h=document.createElement("div");
-  h.className="val-heart";
-  const left=Math.random()*100;
-  const size=10+Math.random()*10;
-  const dur=10+Math.random()*10;
-  const delay=Math.random()*6;
-  h.style.left=left+"vw";
-  h.style.width=size+"px";
-  h.style.height=size+"px";
-  h.style.animationDuration=dur+"s";
-  h.style.animationDelay=delay+"s";
-  h.style.opacity=0.10+Math.random()*0.18;
-  valHearts.appendChild(h);
 }
 </script>
 
